@@ -15,7 +15,11 @@ const SetupPage = () => {
     }
   }, [isOpen, onOpen]);
 
-  return <div className="p-4">Root Page</div>;
+  return (
+    <div className="flex items-center justify-center h-screen w-full">
+      Root Page
+    </div>
+  );
 };
 
 export default SetupPage;
