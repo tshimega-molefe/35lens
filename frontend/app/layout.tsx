@@ -4,6 +4,7 @@ import { montserrat } from "@/lib/fonts";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import ModalProvider from "@/providers/modal-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "35 Lens | Admin Dashboard",
@@ -40,6 +41,7 @@ export default function RootLayout({
         </head>
         <body className={`${montserrat.className} antialiased`}>
           <ModalProvider />
+          <Toaster />
           {children}
         </body>
       </html>

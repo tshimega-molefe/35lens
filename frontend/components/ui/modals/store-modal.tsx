@@ -20,6 +20,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import addCategory from "@/server/storeFormAction";
+import { toast } from "@/hooks/use-toast";
+import { capitalizeFirstLetter, getErrorMessage } from "@/lib/utils";
+import { ToastAction } from "@/components/ui/toast";
 
 const formSchema = z.object({
   storeName: z.string().min(1).max(50),
@@ -40,9 +43,26 @@ export const StoreModal = () => {
 
   async function onSubmit(formData: StoreFormValues) {
     setIsLoading(true);
+    const { storeName: categoryName } = formData;
+    const formattedName = capitalizeFirstLetter(categoryName);
+
     try {
-      addCategory(formData);
+      await addCategory(formData);
+      toast({
+        title: `${formattedName} successfully added to 35LENS!`,
+        description: `Please don't forget to add new products to ${formattedName}`,
+      });
     } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: getErrorMessage(error),
+        action: (
+          <ToastAction altText="Try again" onClick={() => onSubmit(formData)}>
+            Try again
+          </ToastAction>
+        ),
+      });
     } finally {
       setIsLoading(false);
     }
@@ -80,15 +100,11 @@ export const StoreModal = () => {
                   type="submit"
                   disabled={isLoading}
                 >
-                  {isLoading ? (
-                    <Loader2 className="animate-spin" />
-                  ) : (
-                    <p>Cancel</p>
-                  )}
+                  <p>Cancel</p>
                 </Button>
                 <Button type="submit" disabled={isLoading}>
                   {isLoading ? (
-                    <Loader2 className="animate-spin" />
+                    <Loader2 className="animate-spin mx-[1.30rem]" />
                   ) : (
                     <p>Continue</p>
                   )}

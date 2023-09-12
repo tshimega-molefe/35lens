@@ -8,7 +8,9 @@ export default async function addCategory(formData: StoreFormValues) {
   try {
     // TODO: Create Store
   } catch (error: unknown) {
-    getErrorMessage(error);
+    return {
+      error: getErrorMessage(error),
+    };
   } finally {
   }
 }
