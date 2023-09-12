@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { montserrat } from "@/lib/fonts";
 
 import { ClerkProvider } from "@clerk/nextjs";
+import ModalProvider from "@/providers/modal-provider";
 
 export const metadata: Metadata = {
   title: "35 Lens | Admin Dashboard",
@@ -38,6 +39,7 @@ export default function RootLayout({
           <link rel="manifest" href="/site.webmanifest" />
         </head>
         <body className={`${montserrat.className} antialiased`}>
+          <ModalProvider />
           {children}
         </body>
       </html>
