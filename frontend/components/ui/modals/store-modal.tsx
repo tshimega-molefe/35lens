@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import addCategory from "@/server/storeForm";
+import addCategory from "@/server/storeFormAction";
 
 const formSchema = z.object({
   storeName: z.string().min(1).max(50),
