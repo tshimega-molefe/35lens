@@ -1,5 +1,5 @@
 import Image from "next/image";
 
 export default function Home() {
-  return <div>Hello admin dashboard</div>;
+  return <h1>Hello admin dashboard</h1>;
 }
