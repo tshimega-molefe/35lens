@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { opensans } from "@/lib/fonts";
+import { montserrat } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "35 Lens | Admin Dashboard",
@@ -34,7 +34,7 @@ export default function RootLayout({
         />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body className={`${opensans.className} antialiased`}>{children}</body>
+      <body className={`${montserrat.className} antialiased`}>{children}</body>
     </html>
   );
 }
