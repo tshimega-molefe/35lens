@@ -97,10 +97,15 @@ export const StoreModal = () => {
                   variant="outline"
                   type="submit"
                   disabled={isLoading}
+                  className="active:scale-95 transition-transform duration-75"
                 >
                   <p>Cancel</p>
                 </Button>
-                <Button type="submit" disabled={isLoading}>
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="active:scale-95 transition-transform duration-75"
+                >
                   {isLoading ? (
                     <Loader2 className="animate-spin mx-[1.30rem]" />
                   ) : (
