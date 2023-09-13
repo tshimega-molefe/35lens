@@ -1,5 +1,6 @@
 import { FC } from "react";
 import prisma from "@/lib/prisma.db";
+import { Metadata } from "next";
 
 interface DashboardPageProps {
   params: { storeId: string };
@@ -11,7 +12,7 @@ const DashboardPage: FC<DashboardPageProps> = async ({ params }) => {
       id: params.storeId,
     },
   });
-  return <div>Active Store:</div>;
+  return <div>Active Store: {store?.name}</div>;
 };
 
 export default DashboardPage;
