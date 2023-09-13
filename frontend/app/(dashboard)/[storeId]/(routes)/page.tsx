@@ -1,6 +1,5 @@
 import { FC } from "react";
 import prisma from "@/lib/prisma.db";
-import { Metadata } from "next";
 
 interface DashboardPageProps {
   params: { storeId: string };
