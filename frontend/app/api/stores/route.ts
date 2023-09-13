@@ -18,16 +18,16 @@ export async function POST(req: Request) {
       return new NextResponse("Name is required", { status: 400 });
     }
 
-    const category = await prisma.category.create({
+    const store = await prisma.store.create({
       data: {
         name,
         userId,
       },
     });
 
-    return NextResponse.json(category);
+    return NextResponse.json(store);
   } catch (error) {
-    console.log("[CATEGORY_POST]", error);
+    console.log("[STORE_POST]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }

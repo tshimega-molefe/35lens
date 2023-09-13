@@ -9,7 +9,7 @@ export default async function DashboardLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { categoryId: string };
+  params: { storeId: string };
 }) {
   const { userId } = auth();
 
@@ -17,14 +17,14 @@ export default async function DashboardLayout({
     redirect("/sign-in");
   }
 
-  const category = await prisma.category.findFirst({
+  const store = await prisma.store.findFirst({
     where: {
-      id: params.categoryId,
+      id: params.storeId,
       userId,
     },
   });
 
-  if (!category) {
+  if (!store) {
     redirect("/");
   }
 

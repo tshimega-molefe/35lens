@@ -13,14 +13,14 @@ export default async function SetupLayout({
     redirect("/");
   }
 
-  const category = await prisma.category.findFirst({
+  const store = await prisma.store.findFirst({
     where: {
       userId,
     },
   });
 
-  if (category) {
-    redirect(`/${category.id}`);
+  if (store) {
+    redirect(`/${store.id}`);
   }
 
   return <>{children}</>;

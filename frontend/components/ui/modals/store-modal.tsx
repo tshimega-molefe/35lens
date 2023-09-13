@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
-import { capitalizeFirstLetter, getErrorMessage } from "@/lib/utils";
+import { getErrorMessage } from "@/lib/utils";
 import { ToastAction } from "@/components/ui/toast";
 import axios from "axios";
 
@@ -44,13 +44,8 @@ export const StoreModal = () => {
   async function onSubmit(formData: StoreFormValues) {
     try {
       setIsLoading(true);
-      const response = await axios.post("/api/categories", formData);
-      const formattedName = capitalizeFirstLetter(formData.name);
-      toast({
-        title: `Successfully added ${formattedName} to 35Lens.`,
-        description: `Don't forget to add products to ${formattedName}.`,
-      });
-      console.log("DEBUG:", response.data);
+      const response = await axios.post("/api/stores", formData);
+      window.location.assign(`/${response.data.id}`);
     } catch (error: unknown) {
       toast({
         variant: "destructive",
@@ -69,8 +64,8 @@ export const StoreModal = () => {
 
   return (
     <Modal
-      title="Add Category"
-      description="Add a new category to manage products and reports"
+      title="Add Store"
+      description="Add a new store to manage products and categories"
       isOpen={storeModal.isOpen}
       onClose={storeModal.onClose}
     >
@@ -83,15 +78,15 @@ export const StoreModal = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Category Name</FormLabel>
+                    <FormLabel>Store Name</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
-                        placeholder="e.g. Lighting"
+                        placeholder="e.g. 35 Lens"
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>Enter a product category</FormDescription>
+                    <FormDescription>Enter a store name</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
