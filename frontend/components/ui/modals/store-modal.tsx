@@ -19,13 +19,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import addCategory from "@/server/storeFormAction";
 import { toast } from "@/hooks/use-toast";
 import { capitalizeFirstLetter, getErrorMessage } from "@/lib/utils";
 import { ToastAction } from "@/components/ui/toast";
+import axios from "axios";
 
 const formSchema = z.object({
-  storeName: z.string().min(1).max(50),
+  name: z.string().min(1).max(50),
 });
 
 export type StoreFormValues = z.infer<typeof formSchema>;
@@ -37,22 +37,21 @@ export const StoreModal = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      storeName: "",
+      name: "",
     },
   });
 
   async function onSubmit(formData: StoreFormValues) {
-    setIsLoading(true);
-    const { storeName: categoryName } = formData;
-    const formattedName = capitalizeFirstLetter(categoryName);
-
     try {
-      await addCategory(formData);
+      setIsLoading(true);
+      const response = await axios.post("/api/categories", formData);
+      const formattedName = capitalizeFirstLetter(formData.name);
       toast({
-        title: `${formattedName} successfully added to 35LENS!`,
-        description: `Please don't forget to add new products to ${formattedName}`,
+        title: `Successfully added ${formattedName} to 35Lens.`,
+        description: `Don't forget to add products to ${formattedName}.`,
       });
-    } catch (error) {
+      console.log("DEBUG:", response.data);
+    } catch (error: unknown) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
@@ -81,12 +80,16 @@ export const StoreModal = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField
                 control={form.control}
-                name="storeName"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Category Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g. Lighting" {...field} />
+                      <Input
+                        disabled={isLoading}
+                        placeholder="e.g. Lighting"
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>Enter a product category</FormDescription>
                     <FormMessage />
